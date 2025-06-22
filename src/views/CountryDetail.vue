@@ -2,9 +2,19 @@
 import { useRoute } from 'vue-router';
 import { useCountryStore } from '@/stores/country';
 import { computed } from 'vue';
+import { onMounted } from 'vue';
 
 const route = useRoute();
 const store = useCountryStore();
+
+onMounted(() => {
+  const lat = route.query.lat;
+  const lng = route.query.lng;
+
+  if (lat && lng) {
+    store.getWeather({ lat, lng });
+  }
+});
 
 // Format waktu dari "2025-06-22T05:00" jadi "June 22, 2025"
 const date = computed(() => {
